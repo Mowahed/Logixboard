@@ -1,21 +1,23 @@
-const express = require('express')
+require('dotenv').config();
+import express from 'express';
+import { getShipmentById, getTotalWeight, postShipment } from './routes/shipments';
+import { getOrganizationById, postOrganization } from './routes/organizations';
 const bodyParser = require("body-parser");
 
 const app = express()
 app.use(bodyParser.json());
-const port = 3000
+const port = process.env.PORT;
 
-app.post('/shipment', async (req: any, res: any) => {
-})
 
-app.post('/organization', (req: any, res: any) => {
-})
+app.post('/shipment', postShipment);
 
-app.get('/shipments/:shipmentId', (req: any, res: any) => {
-})
+app.post('/organization', postOrganization);
 
-app.get('/organizations/:organizationId', (req: any, res: any) => {
-})
+app.get('/organizations/:organizationId', getOrganizationById);
+
+app.get('/shipments/total-weight', getTotalWeight);
+
+app.get('/shipments/:shipmentId', getShipmentById);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
